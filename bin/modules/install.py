@@ -30,6 +30,7 @@ def install_system_packages():
         "openssl",
         "default-libmysqlclient-dev",
         "pkg-config",
+        "libpcre3-dev",
         "zlib1g-dev",
         "libncurses-dev",
         "libreadline-dev",
