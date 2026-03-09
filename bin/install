@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
+
+APP_ROOT = Path(__file__).resolve().parents[1]
+BIN_DIR = APP_ROOT / "bin"
+
+if str(BIN_DIR) not in sys.path:
+    sys.path.insert(0, str(BIN_DIR))
+
+from modules.install import install, parse_options
+
+def main():
+    args = sys.argv[1:]
+    selected, exclusive_mode = parse_options(args)
+    install(selected, exclusive_mode)
+
+if __name__ == "__main__":
+    main()

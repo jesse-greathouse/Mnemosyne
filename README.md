@@ -12,19 +12,19 @@ The goal is to transform model specialization from a manual workflow into a gove
 
 Organizations often discover recurring tasks that can benefit from fine-tuned language models. Examples include:
 
-* generating structured documents
-* normalizing legal or compliance text
-* drafting engineering artifacts
-* enforcing formatting or tone conventions
-* automating repetitive editorial workflows
+- generating structured documents
+- normalizing legal or compliance text
+- drafting engineering artifacts
+- enforcing formatting or tone conventions
+- automating repetitive editorial workflows
 
 However, the fine-tuning process itself often becomes a barrier:
 
-* datasets are difficult to curate and manage
-* experiments are not reproducible
-* model lineage becomes unclear
-* successful models are difficult to reuse
-* training workflows are scattered across scripts and notebooks
+- datasets are difficult to curate and manage
+- experiments are not reproducible
+- model lineage becomes unclear
+- successful models are difficult to reuse
+- training workflows are scattered across scripts and notebooks
 
 Mnemosyne solves this by acting as a **control plane for fine-tuning workflows**, enabling teams to manage datasets, experiments, and resulting models in a structured environment.
 
@@ -42,10 +42,10 @@ Every dataset and model should trace back to a clearly defined workflow.
 
 Examples:
 
-* Jira epic drafting
-* legal copy normalization
-* marketing content generation
-* structured engineering documentation
+- Jira epic drafting
+- legal copy normalization
+- marketing content generation
+- structured engineering documentation
 
 ---
 
@@ -55,10 +55,10 @@ Large training datasets are **never stored directly in the relational database**
 
 Instead:
 
-* the database stores metadata
-* dataset artifacts are stored as files
-* training jobs consume dataset artifacts
-* resulting models are recorded as artifacts
+- the database stores metadata
+- dataset artifacts are stored as files
+- training jobs consume dataset artifacts
+- resulting models are recorded as artifacts
 
 This keeps the database lightweight and improves scalability.
 
@@ -70,10 +70,10 @@ Datasets are versioned.
 
 Each dataset revision is treated as an immutable artifact that contains:
 
-* normalized training examples
-* validation metadata
-* integrity checksums
-* provenance information
+- normalized training examples
+- validation metadata
+- integrity checksums
+- provenance information
 
 Once created, dataset revisions are never modified.
 
@@ -83,9 +83,9 @@ Once created, dataset revisions are never modified.
 
 Every model artifact must trace back to:
 
-* a dataset revision
-* a training configuration
-* a fine-tuning job
+- a dataset revision
+- a training configuration
+- a fine-tuning job
 
 This ensures reproducibility and accountability.
 
@@ -121,30 +121,30 @@ External Providers (OpenAI)
 
 ## Backend
 
-* Python 3.12
-* Django
-* Django REST Framework
-* Celery
-* RabbitMQ
-* Redis
-* MySQL 8.4
+- Python 3.12
+- Django
+- Django REST Framework
+- Celery
+- RabbitMQ
+- Redis
+- MySQL 8.4
 
 The backend is responsible for:
 
-* dataset management
-* training orchestration
-* model artifact registry
-* workflow governance
-* provider integrations
-* job orchestration
+- dataset management
+- training orchestration
+- model artifact registry
+- workflow governance
+- provider integrations
+- job orchestration
 
 ---
 
 ## Frontend
 
-* Vue 3
-* TypeScript
-* Vite
+- Vue 3
+- TypeScript
+- Vite
 
 The frontend provides a web interface for interacting with workflows, datasets, training jobs, and model artifacts.
 
@@ -152,11 +152,11 @@ The frontend provides a web interface for interacting with workflows, datasets, 
 
 ## Infrastructure
 
-* OpenResty (edge reverse proxy)
-* Supervisor or systemd for process management
-* Local filesystem storage for dataset artifacts
+- OpenResty (edge reverse proxy)
+- Supervisor or systemd for process management
+- Local filesystem storage for dataset artifacts
 
-OpenResty is used primarily as a reverse proxy and TLS termination layer. Lua integration may be used later to support gateway functionality if needed.
+OpenResty is used primarily as a reverse proxy and TLS termination layer.
 
 ---
 
@@ -168,16 +168,16 @@ Mnemosyne separates **metadata storage** from **artifact storage**.
 
 Stored in MySQL:
 
-* workflows
-* datasets
-* dataset revisions
-* training jobs
-* evaluation results
-* model artifacts
-* promotions
-* user accounts
-* team permissions
-* audit records
+- workflows
+- datasets
+- dataset revisions
+- training jobs
+- evaluation results
+- model artifacts
+- promotions
+- user accounts
+- team permissions
+- audit records
 
 ---
 
@@ -187,11 +187,11 @@ Large artifacts are stored outside the database.
 
 Examples:
 
-* dataset files
-* normalized training corpora
-* evaluation exports
-* training logs
-* job outputs
+- dataset files
+- normalized training corpora
+- evaluation exports
+- training logs
+- job outputs
 
 Artifacts are referenced by URI and checksum in the database.
 
@@ -211,11 +211,9 @@ Represents a real-world task that may benefit from model specialization.
 
 Examples:
 
-* engineering artifact generation
-* legal text normalization
-* marketing copy production
-
-Workflows provide the context that datasets and models belong to.
+- engineering artifact generation
+- legal text normalization
+- marketing copy production
 
 ---
 
@@ -233,13 +231,11 @@ An immutable version of a dataset.
 
 Contains:
 
-* normalized training examples
-* dataset metadata
-* record counts
-* checksums
-* artifact references
-
-Dataset revisions are stored as artifact files.
+- normalized training examples
+- dataset metadata
+- record counts
+- checksums
+- artifact references
 
 ---
 
@@ -249,12 +245,12 @@ Represents a fine-tuning execution.
 
 Tracks:
 
-* provider job IDs
-* status
-* logs
-* dataset revision used
-* resulting checkpoints
-* final model artifact
+- provider job IDs
+- status
+- logs
+- dataset revision used
+- resulting checkpoints
+- final model artifact
 
 Training jobs run asynchronously through Celery workers.
 
@@ -266,13 +262,11 @@ A reusable model produced by a training job.
 
 Each artifact includes:
 
-* provider model identifier
-* training job lineage
-* dataset revision lineage
-* evaluation results
-* promotion status
-
-Model artifacts are stored in the **model registry**.
+- provider model identifier
+- training job lineage
+- dataset revision lineage
+- evaluation results
+- promotion status
 
 ---
 
@@ -280,44 +274,244 @@ Model artifacts are stored in the **model registry**.
 
 Represents a test suite executed against a candidate model.
 
-Evaluation runs allow models to be compared against:
+---
 
-* baseline models
-* previous model versions
-* workflow expectations
+# Installation
+
+## System Requirements
+
+Recommended minimum environment:
+
+- Linux (Ubuntu or Debian recommended)
+- 4 CPU cores
+- 8 GB RAM
+- MySQL 8+
+- RabbitMQ
+- Redis
+
+External services are **not automatically provisioned**. Mnemosyne connects to existing infrastructure.
 
 ---
 
-# Training Workflow
+## Clone the Repository
 
-A typical training workflow in Mnemosyne follows these steps.
-
-1. Create a workflow.
-2. Import or construct training examples.
-3. Generate a dataset revision.
-4. Validate dataset structure.
-5. Launch a training job.
-6. Monitor training progress.
-7. Run evaluation tests.
-8. Promote the model artifact.
+```
+git clone https://github.com/jesse-greathouse/Mnemosyne.git
+cd Mnemosyne
+```
 
 ---
 
-# Job Orchestration
+## Install Dependencies
 
-Background tasks are executed through Celery.
+Run the installer:
 
-Typical jobs include:
+```
+bin/install
+```
 
-* dataset validation
-* dataset normalization
-* training job orchestration
-* evaluation runs
-* artifact processing
+This installs:
 
-RabbitMQ serves as the message broker.
+- system packages
+- Python runtime
+- virtual environment
+- Python dependencies
+- Node.js
+- frontend build dependencies
+- OpenResty
 
-Redis provides caching and ephemeral coordination.
+---
+
+## Build the Frontend
+
+If needed manually:
+
+```
+bin/install --build
+```
+
+---
+
+# Configuration
+
+After installation, configure the application.
+
+```
+bin/configure
+```
+
+This interactive setup will:
+
+- generate a Django secret key
+- configure database connection
+- configure RabbitMQ connection
+- configure Redis connection
+- configure web server settings
+- create `.env` configuration
+- generate runtime configuration files
+
+---
+
+## Configuration Files
+
+Primary configuration files:
+
+```
+.mnemosyne-cfg.yml   # Application configuration
+src/.env             # Runtime environment variables
+etc/nginx/           # Web server configuration
+etc/supervisor/      # Process management
+```
+
+---
+
+## External Services
+
+The following services must be available:
+
+### MySQL
+
+Example configuration:
+
+```
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_NAME=mnemosyne
+DATABASE_USER=mnemosyne
+DATABASE_PASSWORD=secret
+```
+
+---
+
+### RabbitMQ
+
+RabbitMQ is used as the Celery message broker.
+
+Example:
+
+```
+RABBITMQ_HOST=localhost
+RABBITMQ_PORT=5672
+RABBITMQ_USER=mnemosyne
+RABBITMQ_PASSWORD=secret
+RABBITMQ_VHOST=mnemosyne
+```
+
+---
+
+### Redis
+
+Redis is used for caching and coordination.
+
+Example:
+
+```
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+```
+
+---
+
+# Database Setup
+
+Apply migrations:
+
+```
+bin/migrate
+```
+
+---
+
+# Create Admin User
+
+Create the Django admin account:
+
+```
+bin/adminuser
+```
+
+---
+
+# Seed Initial Data
+
+Optional initialization:
+
+```
+bin/seed
+```
+
+This creates default groups and permissions.
+
+---
+
+# Running the Application
+
+Mnemosyne runs two primary process groups.
+
+### Web Services
+
+```
+bin/web start
+```
+
+This launches:
+
+- OpenResty
+- Gunicorn
+- Supervisor processes
+
+Stop:
+
+```
+bin/web stop
+```
+
+Restart:
+
+```
+bin/web restart
+```
+
+---
+
+### Background Workers
+
+Celery workers handle asynchronous jobs.
+
+Start workers:
+
+```
+bin/queue start
+```
+
+Stop workers:
+
+```
+bin/queue stop
+```
+
+Restart workers:
+
+```
+bin/queue restart
+```
+
+---
+
+# Application Access
+
+Default URL:
+
+```
+http://localhost:8282
+```
+
+API endpoint example:
+
+```
+http://localhost:8282/api/ping
+```
 
 ---
 
@@ -326,71 +520,87 @@ Redis provides caching and ephemeral coordination.
 Example filesystem layout:
 
 ```
-/var/mnemosyne
-    /datasets
-    /artifacts
-    /evaluations
-    /logs
+Mnemosyne/
+    bin/
+    etc/
+    opt/
+    src/
+    var/
+        cache/
+        log/
+        static/
+        www/
 ```
 
-Each dataset revision and artifact is referenced in the database with:
+Artifacts are typically stored under:
 
-* URI
-* checksum
-* metadata
+```
+/var/mnemosyne/
+```
 
 ---
 
-# Provider Integrations
+# Training Workflow
 
-The first provider integration is OpenAI.
+Typical model lifecycle:
 
-Responsibilities include:
+1. Create a workflow
+2. Import training data
+3. Generate dataset revision
+4. Validate dataset
+5. Launch training job
+6. Monitor training progress
+7. Run evaluation tests
+8. Promote model artifact
 
-* dataset upload
-* training job creation
-* status polling
-* checkpoint tracking
-* model artifact registration
+---
 
-Provider logic is implemented as an internal integration layer within the backend.
+# Job Orchestration
+
+Background tasks include:
+
+- dataset validation
+- dataset normalization
+- training orchestration
+- evaluation runs
+- artifact processing
+
+Celery workers process jobs from RabbitMQ.
 
 ---
 
 # Security Model
 
-Mnemosyne supports enterprise-grade access control.
+Access control supports:
 
-Entities may be scoped to:
-
-* organizations
-* teams
-* individual users
+- users
+- teams
+- organizations
 
 Permissions govern:
 
-* dataset visibility
-* training job execution
-* model promotion
-* workflow ownership
+- dataset visibility
+- training job execution
+- model promotion
+- workflow ownership
 
 ---
 
 # Deployment Model
 
-Mnemosyne is designed for flexible deployment.
+Typical deployment:
 
-Typical deployment includes:
+```
+OpenResty
+Gunicorn
+Celery Workers
+RabbitMQ
+Redis
+MySQL
+Filesystem Storage
+```
 
-* OpenResty
-* Django application server
-* Celery worker pool
-* RabbitMQ
-* Redis
-* MySQL
-* artifact storage volume
-
-No cloud dependencies are required.
+The platform is fully **self-hostable**.
 
 ---
 
@@ -398,16 +608,16 @@ No cloud dependencies are required.
 
 Potential future capabilities include:
 
-* object storage backends
-* dataset ingestion pipelines
-* automated dataset generation
-* model regression testing
-* workflow automation
-* multi-provider training support
-* experiment tracking dashboards
+- object storage backends
+- dataset ingestion pipelines
+- automated dataset generation
+- model regression testing
+- workflow automation
+- multi-provider training support
+- experiment tracking dashboards
 
 ---
 
 # License
 
-TBD
+See the `LICENSE` file included with this project.

@@ -1,0 +1,149 @@
+# ──────────────────────────────
+# 🧠 Editor & IDE noise
+# ──────────────────────────────
+.vscode/
+.idea/
+.settings/
+*.sublime-workspace
+*.launch
+*.swp
+*.swo
+*.tmp
+.history/*
+.project
+.classpath
+.c9/
+
+# ──────────────────────────────
+# 🧼 System metadata
+# ──────────────────────────────
+*.DS_Store
+.vstags
+.devdbrc
+
+# ──────────────────────────────
+# 🔒 Secrets & credentials
+# ──────────────────────────────
+*.crt
+*.key
+*.csr
+*.pem
+*.pfx
+*.p12
+*.der
+.mnemosyne-cfg.yml
+src/.env
+src/**/.env
+
+# ──────────────────────────────
+# 📦 Build & dependency outputs
+# ──────────────────────────────
+/dist/
+/out/
+/build/
+/node_modules/
+/opt/
+/var/
+/tmp/
+/frontend/dist/
+/frontend/build/
+
+# ──────────────────────────────
+# 📦 Frontend toolchain
+# ──────────────────────────────
+src/frontend/node_modules/
+src/frontend/public/
+src/frontend/.vite
+package-lock.json
+
+# ──────────────────────────────
+# 🐍 Python artifacts
+# ──────────────────────────────
+*.pyc
+__pycache__/
+/.mypy_cache/
+/.pytest_cache/
+/.venv/
+/venv/
+/Pipfile.lock
+
+
+# ──────────────────────────────
+# 📄 Log files
+# ──────────────────────────────
+*.log
+nohup.out
+
+# ──────────────────────────────
+# 🛠️ Supervisor-generated configs
+# ──────────────────────────────
+etc/supervisor/conf.d/supervisord.conf
+etc/supervisor/queue-manager.conf
+etc/supervisor/*.pid
+etc/init.d/*
+etc/*.plist
+
+# ──────────────────────────────
+# 🌐 NGINX runtime configs
+# ──────────────────────────────
+etc/nginx/nginx.conf
+etc/nginx/force-ssl.conf
+etc/nginx/ssl-params.conf
+etc/nginx/lua_env.conf
+etc/nginx/error_page.conf
+etc/nginx/proxy_params.conf
+
+# ──────────────────────────────
+# 🔒 SSL/Certs
+# ──────────────────────────────
+etc/ssl/CA/*
+etc/ssl/certs/*
+etc/ssl/private/*
+etc/ssl/.rnd
+etc/ssl/.oid
+etc/ssl/openssl.cnf
+etc/ssl/openssl.docker.cnf
+
+# ──────────────────────────────
+# ⚙️ Symlink targets or binaries
+# ──────────────────────────────
+bin/bazel
+bin/python
+bin/node
+bin/npm
+bin/composer
+bin/composer.phar
+bin/irc-client
+
+# ──────────────────────────────
+# 🧪 Generated packages
+# ──────────────────────────────
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+*.sqlite3
+
+# ──────────────────────────────
+# 💥 Crash dumps
+# ──────────────────────────────
+core
+*.core
+
+# ──────────────────────────────
+# ✅ Explicitly allow these wrappers (tracked CLI)
+# ──────────────────────────────
+!bin/audit
+!bin/install
+!bin/configure
+!bin/adminuser
+!bin/static
+!bin/dhp
+!bin/web
+!bin/queue
+!bin/migrate
+
+# ──────────────────────────────
+# 📑 Miscellaneous
+# ──────────────────────────────
+commit.txt
